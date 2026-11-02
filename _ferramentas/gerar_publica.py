@@ -19,7 +19,7 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 
 
-def transformar(s, restritos, nota, titulo='', h1='', subtitulo=''):
+def transformar(s, restritos, nota, titulo='', h1='', subtitulo='', miniaturas=(), link_qb='', miniaturas_ids=None):
     m = re.search(r'const D = (\{.*?\});\n', s, re.S)
     if not m:
         sys.exit('Não encontrei "const D = {...};" no HTML.')
@@ -28,6 +28,15 @@ def transformar(s, restritos, nota, titulo='', h1='', subtitulo=''):
         f.pop('res', None)
         if f['camp'] in restritos and f['forma'] != 'ausente':
             f['res'] = True
+            if f['forma'] in miniaturas:
+                f['mini'] = True
+        if link_qb and (f.get('orig') or '').startswith('quai Branly '):
+            f['link'] = link_qb + f['orig'].split()[-1]
+        if f.get('mini'):
+            f['fonte'] = 'Ver el negativo en el archivo del quai Branly'
+            f['credito'] = 'Miniatura, © musée du quai Branly – Jacques Chirac'
+        if f['id'] in (miniaturas_ids or {}):
+            f.update(miniaturas_ids[f['id']], res=True, mini=True)
     s = s[:m.start(1)] + json.dumps(D, ensure_ascii=False) + s[m.end(1):]
 
     def rep(a, b):
@@ -37,11 +46,12 @@ def transformar(s, restritos, nota, titulo='', h1='', subtitulo=''):
         s = s.replace(a, b)
 
     rep("const card = f => {\n",
-        "const card = f => {\n  if (f.res) return `<div class=\"card aus\"><span class=\"frame\"><span>Derechos reservados</span></span><span class=\"cap\"><b>${esc(f.titulo)}</b><span class=\"small\">${esc(f.data)}${f.orig ? ' · ' + esc(f.orig.split(';')[0]) : ''}</span><span class=\"small\">${esc(f.desc)}${f.link ? ` <a href=\"${esc(f.link)}\" target=\"_blank\" rel=\"noopener\">Ver en la fuente</a>` : ''}</span></span></div>`;\n")
+        "const card = f => {\n  if (f.mini) return `<div class=\"card aus mini\"><a href=\"${esc(f.link)}\" target=\"_blank\" rel=\"noopener\"><img src=\"th/mini_${f.id}.jpg\" alt=\"Miniatura de ${esc(f.titulo)}\" loading=\"lazy\"></a><span class=\"cap\"><b>${esc(f.titulo)}</b><span class=\"small\">${esc(f.data)} ${f.orig ? ' · ' + esc(f.orig) : ''} · ${esc(f.credito)}</span><span class=\"small\">${esc(f.desc)}</span></span><a class=\"fonte\" href=\"${esc(f.link)}\" target=\"_blank\" rel=\"noopener\">${esc(f.fonte)}</a></div>`;\n  if (f.res) return `<div class=\"card aus\"><span class=\"frame\"><span>Derechos reservados</span></span><span class=\"cap\"><b>${esc(f.titulo)}</b><span class=\"small\">${esc(f.data)}${f.orig ? ' · ' + esc(f.orig.split(';')[0]) : ''}</span><span class=\"small\">${esc(f.desc)}${f.link ? ` <a href=\"${esc(f.link)}\" target=\"_blank\" rel=\"noopener\">Ver en la fuente</a>` : ''}</span></span></div>`;\n")
     rep("lista.push(...it.filter(f => f.forma !== 'ausente'));",
         "lista.push(...it.filter(f => f.forma !== 'ausente' && !f.res));")
     rep("const tiras = it.every(f => f.forma === 'tira');",
-        "const tiras = it.every(f => f.forma === 'tira' && !f.res);")
+        "const tiras = it.every(f => f.forma === 'tira' && (!f.res || f.mini));")
+    rep("</style>\n\n<header>", ".mini img { width: 100%; max-width: 900px; height: auto; display: block; background: var(--frame) }\n.mini .fonte { justify-self: start; background: var(--anil); color: #fff; font-weight: 600; font-size: .88rem; padding: 8px 13px; text-decoration: none }\n.mini .fonte:hover { text-decoration: underline }\n</style>\n\n<header>")
     rep("lista.push(...ctx);",
         "lista.push(...ctx.filter(f => f.forma !== 'ausente' && !f.res));")
     if nota:
@@ -53,13 +63,14 @@ def transformar(s, restritos, nota, titulo='', h1='', subtitulo=''):
     if subtitulo:
         sitio = [f for f in D['fotos'] if f['forma'] in ('foto', 'tira') and f['grupo'] == 'sitio' and f['camp'] != 'bianchi']
         texto = subtitulo.format(n_visiveis=sum(not f.get('res') for f in sitio),
-                                 n_fotos_res=sum(bool(f.get('res')) and f['forma'] == 'foto' for f in sitio),
-                                 n_tiras_res=sum(bool(f.get('res')) and f['forma'] == 'tira' for f in sitio))
+                                 n_fotos_res=sum(bool(f.get('res')) and not f.get('mini') and f['forma'] == 'foto' for f in sitio),
+                                 n_tiras_mini=sum(bool(f.get('mini')) and f['forma'] == 'tira' for f in sitio))
         s, n = re.subn(r"\$\('lead'\)\.textContent = `.*?`;", lambda _: f"$('lead').textContent = {json.dumps(texto, ensure_ascii=False)};", s, flags=re.S)
         if n != 1:
             sys.exit('Não encontrei a linha do subtítulo; a página mudou de estrutura.')
     usados = ['img/hero.jpg'] + [f'{d}/{f["id"]}.jpg' for f in D['fotos']
                                  if f['forma'] != 'ausente' and not f.get('res') for d in ('img', 'th')]
+    usados += [f'th/mini_{f["id"]}.jpg' for f in D['fotos'] if f.get('mini')]
     return s, usados
 
 
@@ -73,7 +84,8 @@ def main():
     repo, midia = Path(a.repo), Path(a.midia)
 
     s, usados = transformar(Path(a.html).read_text(), set(cfg['acervos']), cfg.get('nota_rodape', ''),
-                           cfg.get('titulo', ''), cfg.get('h1', ''), cfg.get('subtitulo', ''))
+                           cfg.get('titulo', ''), cfg.get('h1', ''), cfg.get('subtitulo', ''),
+                           set(cfg.get('miniaturas', [])), cfg.get('link_quai_branly', ''), cfg.get('miniaturas_ids', {}))
 
     faltam, copiados = [], 0
     for p in usados:

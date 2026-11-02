@@ -27,3 +27,7 @@ página completa por `_ferramentas/gerar_publica.py`.
 para a fonte (sem imagem), a nota que vai no rodapé, e o título e o subtítulo da
 versão pública. Quando chegar uma autorização, retirar o acervo da lista, ajustar
 nota, título e subtítulo, e regenerar.
+
+As formas em `miniaturas` (hoje, as tiras de negativos) e os itens em
+`miniaturas_ids` (hoje, von Hagen) aparecem como miniatura, sem ampliação, com link destacado para a fonte. Esses
+arquivos são `th/mini_<id>.jpg`, ficam só neste repositório e não vêm do artefato.
