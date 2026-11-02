@@ -34,3 +34,6 @@ nota, título e subtítulo, e regenerar.
 Os acervos em `miniaturas_acervos` (hoje, Reichlen) e os itens em
 `miniaturas_ids` (hoje, von Hagen, Sessarego e Matos) aparecem como miniatura, sem ampliação, com link destacado para a fonte. Esses
 arquivos são `th/mini_<id>.jpg`, ficam só neste repositório e não vêm do artefato.
+
+`_ferramentas/extras.json` acrescenta registros que só existem na versão publicada aqui
+(hoje, as 7 imagens de Matos 2002), sem passar pela página completa.

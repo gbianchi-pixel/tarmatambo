@@ -24,7 +24,15 @@ def transformar(s, restritos, nota, titulo='', h1='', subtitulo='', miniaturas=(
     if not m:
         sys.exit('Não encontrei "const D = {...};" no HTML.')
     D = json.loads(m.group(1))
+    extras = json.loads((AQUI / 'extras.json').read_text()) if (AQUI / 'extras.json').exists() else {}
+    for c in D['camps']:
+        c.update(extras.get('camps', {}).get(c['key'], {}))
     for f in D['fotos']:
+        f['sec'] = extras.get('secoes', {}).get(f['id'], f.get('sec'))
+    D['fotos'] += extras.get('fotos', [])
+    for f in D['fotos']:
+        if f['id'] in {x['id'] for x in extras.get('fotos', [])}:
+            continue
         f.pop('res', None)
         if f['camp'] in restritos and f['forma'] != 'ausente':
             f['res'] = True
