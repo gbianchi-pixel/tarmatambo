@@ -4,10 +4,11 @@
     "sessarego",
     "vonhagen",
     "matos",
-    "ministerio"
+    "ministerio",
+    "loja"
   ],
-  "nota_rodape": "Esta página es un recurso académico para el trabajo con la comunidad de Tarmatambo; cada imagen lleva su referencia y su enlace a la fuente. Las imágenes del musée du quai Branly, del álbum de Sessarego (Ministerio de Cultura del Perú), de von Hagen, de Matos y del Ministerio de Cultura (2023) se muestran solo en miniatura.",
-  "subtitulo": "{n_visiveis} fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías del Ministerio de Cultura (2023) y propias de 2023 y 2025 para comparar. De Sessarego, Reichlen, von Hagen, Matos y el Ministerio de Cultura, {n_fotos_mini} fotografías, {n_tiras_mini} tiras de negativos y tres planos aparecen en miniatura, con enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.",
+  "nota_rodape": "Esta página es un recurso académico para el trabajo con la comunidad de Tarmatambo; cada imagen lleva su referencia y su enlace a la fuente. Las imágenes del musée du quai Branly, del álbum de Sessarego (Ministerio de Cultura del Perú), de von Hagen, de Matos, del libro de Loja Alania y del Ministerio de Cultura (2023) se muestran solo en miniatura.",
+  "subtitulo": "{n_visiveis} fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías del Ministerio de Cultura (2023) y propias de 2023 y 2025 para comparar. De Sessarego, Reichlen, von Hagen, Matos, Loja Alania y el Ministerio de Cultura, {n_fotos_mini} fotografías, {n_tiras_mini} tiras de negativos y tres planos aparecen en miniatura, con enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.",
   "link_quai_branly": "https://collections.quaibranly.fr/?action=search&field=/Record/ObjectNumber&label=N%C2%B0%20de%20gestion&value=",
   "miniaturas_ids": {
     "vonhagen1955": {
@@ -89,6 +90,16 @@
       "link": "https://consultaprevia.cultura.gob.pe/sites/default/files/procesos/archivos/Fichas%20de%20declaratoria%20BIP%20Tarmatambo.pdf",
       "fonte": "Ver en la ficha, PDF p. 9 (Ministerio de Cultura del Perú)",
       "credito": "Miniatura, Ministerio de Cultura del Perú"
+    },
+    "loja2017_p34": {
+      "link": "https://www.slideshare.net/slideshow/datos-historicos-sobre-la-bella-perla-de-los-andes/288060914",
+      "fonte": "Ver en el libro, p. 34 (SlideShare)",
+      "credito": "Miniatura, de En la memoria del tiempo (2017); fotógrafo desconocido"
+    },
+    "loja2017_p36": {
+      "link": "https://www.slideshare.net/slideshow/datos-historicos-sobre-la-bella-perla-de-los-andes/288060914",
+      "fonte": "Ver en el libro, p. 36 (SlideShare)",
+      "credito": "Miniatura, de En la memoria del tiempo (2017); fotógrafo desconocido"
     }
   },
   "miniaturas_acervos": [
