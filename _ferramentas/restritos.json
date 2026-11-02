@@ -5,8 +5,8 @@
     "vonhagen",
     "matos"
   ],
-  "nota_rodape": "Esta página es un recurso académico para el trabajo con la comunidad de Tarmatambo; cada imagen lleva su referencia y su enlace a la fuente. Las imágenes del musée du quai Branly, del álbum de Sessarego (Ministerio de Cultura del Perú) y de von Hagen se muestran solo en miniatura. La de Matos aparece solo con su ficha y el enlace a la fuente, mientras no tengamos autorización para reproducirla.",
-  "subtitulo": "{n_visiveis} fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías propias de 2023 y 2025 para comparar. De Sessarego, Reichlen y von Hagen, {n_fotos_mini} fotografías y {n_tiras_mini} tiras de negativos aparecen en miniatura, con enlace a la fuente. La fotografía de Matos aparece solo con su ficha y el enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.",
+  "nota_rodape": "Esta página es un recurso académico para el trabajo con la comunidad de Tarmatambo; cada imagen lleva su referencia y su enlace a la fuente. Las imágenes del musée du quai Branly, del álbum de Sessarego (Ministerio de Cultura del Perú), de von Hagen y de Matos se muestran solo en miniatura.",
+  "subtitulo": "{n_visiveis} fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías propias de 2023 y 2025 para comparar. De Sessarego, Reichlen, von Hagen y Matos, {n_fotos_mini} fotografías y {n_tiras_mini} tiras de negativos aparecen en miniatura, con enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.",
   "link_quai_branly": "https://collections.quaibranly.fr/?action=search&field=/Record/ObjectNumber&label=N%C2%B0%20de%20gestion&value=",
   "miniaturas_ids": {
     "vonhagen1955": {
@@ -48,6 +48,11 @@
       "link": "https://hdl.handle.net/20.500.14427/379",
       "fonte": "Ver en el álbum, p. 574 (Ministerio de Cultura del Perú)",
       "credito": "Miniatura, Ministerio de Cultura del Perú"
+    },
+    "matos_foto4": {
+      "link": "https://www.jstor.org/stable/27768347?seq=19",
+      "fonte": "Ver el artículo, p. 177 (JSTOR)",
+      "credito": "Miniatura, Revista de Arqueología Americana 8"
     }
   },
   "miniaturas_acervos": [
