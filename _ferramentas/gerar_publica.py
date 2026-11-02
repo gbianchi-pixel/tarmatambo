@@ -28,12 +28,12 @@ def transformar(s, restritos, nota, titulo='', h1='', subtitulo='', miniaturas=(
         f.pop('res', None)
         if f['camp'] in restritos and f['forma'] != 'ausente':
             f['res'] = True
-            if f['forma'] in miniaturas:
+            if f['camp'] in miniaturas:
                 f['mini'] = True
         if link_qb and (f.get('orig') or '').startswith('quai Branly '):
             f['link'] = link_qb + f['orig'].split()[-1]
         if f.get('mini'):
-            f['fonte'] = 'Ver el negativo en el archivo del quai Branly'
+            f['fonte'] = 'Ver el negativo en el archivo del quai Branly' if f['forma'] == 'tira' else 'Ver la fotografía en el archivo del quai Branly'
             f['credito'] = 'Miniatura, © musée du quai Branly – Jacques Chirac'
         if f['id'] in (miniaturas_ids or {}):
             f.update(miniaturas_ids[f['id']], res=True, mini=True)
@@ -64,6 +64,7 @@ def transformar(s, restritos, nota, titulo='', h1='', subtitulo='', miniaturas=(
         sitio = [f for f in D['fotos'] if f['forma'] in ('foto', 'tira') and f['grupo'] == 'sitio' and f['camp'] != 'bianchi']
         texto = subtitulo.format(n_visiveis=sum(not f.get('res') for f in sitio),
                                  n_fotos_res=sum(bool(f.get('res')) and not f.get('mini') and f['forma'] == 'foto' for f in sitio),
+                                 n_fotos_mini=sum(bool(f.get('mini')) and f['forma'] == 'foto' for f in sitio),
                                  n_tiras_mini=sum(bool(f.get('mini')) and f['forma'] == 'tira' for f in sitio))
         s, n = re.subn(r"\$\('lead'\)\.textContent = `.*?`;", lambda _: f"$('lead').textContent = {json.dumps(texto, ensure_ascii=False)};", s, flags=re.S)
         if n != 1:
@@ -85,7 +86,7 @@ def main():
 
     s, usados = transformar(Path(a.html).read_text(), set(cfg['acervos']), cfg.get('nota_rodape', ''),
                            cfg.get('titulo', ''), cfg.get('h1', ''), cfg.get('subtitulo', ''),
-                           set(cfg.get('miniaturas', [])), cfg.get('link_quai_branly', ''), cfg.get('miniaturas_ids', {}))
+                           set(cfg.get('miniaturas_acervos', [])), cfg.get('link_quai_branly', ''), cfg.get('miniaturas_ids', {}))
 
     faltam, copiados = [], 0
     for p in usados:

@@ -1,5 +1,8 @@
 # Tarmatambo en imágenes — versão pública
 
+A função deste repositório é acadêmica: um recurso eticamente referenciado para o
+trabalho com a comunidade de Tarmatambo. Cada imagem leva referência e link à fonte.
+
 Este repositório publica, pelo GitHub Pages, a versão pública da página
 "Tarmatambo en imágenes": https://gbianchi-pixel.github.io/tarmatambo/
 
@@ -28,6 +31,6 @@ para a fonte (sem imagem), a nota que vai no rodapé, e o título e o subtítulo
 versão pública. Quando chegar uma autorização, retirar o acervo da lista, ajustar
 nota, título e subtítulo, e regenerar.
 
-As formas em `miniaturas` (hoje, as tiras de negativos) e os itens em
+Os acervos em `miniaturas_acervos` (hoje, Reichlen) e os itens em
 `miniaturas_ids` (hoje, von Hagen) aparecem como miniatura, sem ampliação, com link destacado para a fonte. Esses
 arquivos são `th/mini_<id>.jpg`, ficam só neste repositório e não vêm do artefato.

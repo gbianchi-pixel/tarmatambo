@@ -5,11 +5,8 @@
     "vonhagen",
     "matos"
   ],
-  "nota_rodape": "En esta versión pública, las imágenes del musée du quai Branly, del álbum de Sessarego (Ministerio de Cultura del Perú) y de Matos aparecen solo con su ficha y el enlace a la fuente, mientras no tengamos autorización para reproducirlas. De las tiras de negativos del quai Branly y de la lámina de von Hagen se muestra solo una miniatura, con enlace a la fuente.",
-  "subtitulo": "{n_visiveis} fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías propias de 2023 y 2025 para comparar. Las {n_tiras_mini} tiras de negativos de Reichlen y la lámina de von Hagen aparecen en miniatura, con enlace a la fuente. Otras {n_fotos_res} fotografías, de Sessarego, Reichlen y Matos, aparecen solo con su ficha y el enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.",
-  "miniaturas": [
-    "tira"
-  ],
+  "nota_rodape": "Esta página es un recurso académico para el trabajo con la comunidad de Tarmatambo; cada imagen lleva su referencia y su enlace a la fuente. Las imágenes del musée du quai Branly y de von Hagen se muestran solo en miniatura. Las del álbum de Sessarego (Ministerio de Cultura del Perú) y de Matos aparecen solo con su ficha y el enlace a la fuente, mientras no tengamos autorización para reproducirlas.",
+  "subtitulo": "{n_visiveis} fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías propias de 2023 y 2025 para comparar. De Reichlen y von Hagen, {n_fotos_mini} fotografías y {n_tiras_mini} tiras de negativos aparecen en miniatura, con enlace a la fuente. Otras {n_fotos_res} fotografías, de Sessarego y Matos, aparecen solo con su ficha y el enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.",
   "link_quai_branly": "https://collections.quaibranly.fr/?action=search&field=/Record/ObjectNumber&label=N%C2%B0%20de%20gestion&value=",
   "miniaturas_ids": {
     "vonhagen1955": {
@@ -17,5 +14,8 @@
       "fonte": "Ver la lámina en el libro (Internet Archive)",
       "credito": "Miniatura, de Highway of the Sun (1955); derechos inciertos"
     }
-  }
+  },
+  "miniaturas_acervos": [
+    "reichlen"
+  ]
 }
