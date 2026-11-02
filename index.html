@@ -82,6 +82,18 @@ button.card:focus-visible, button.strip:focus-visible { outline: 2px solid var(-
 .flag { color: var(--flag) }
 .strips { display: grid; gap: 16px }
 .strip img { width: 100%; height: auto; aspect-ratio: 1500 / 170; object-fit: cover; display: block; background: var(--frame) }
+/* fotografías recientes, en un panel que se abre y se recoge */
+.recientes { scroll-margin-top: 66px; border-block: 1px solid var(--line) }
+details.recientes > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; width: auto; padding-block: 18px; color: var(--fg); list-style: none }
+details.recientes > summary::-webkit-details-marker { display: none }
+.recientes .yr { color: var(--fg) }
+.recientes .tit { font-size: 1.12rem; font-weight: 600 }
+.recientes .cuenta { font-size: .85rem; font-weight: 400; color: var(--muted) }
+.recientes .accion { margin-left: auto; align-self: center; font: 500 .85rem var(--body); color: var(--link); border: 1px solid var(--line); padding: 7px 12px }
+.recientes .accion::after { content: "Abrir" }
+.recientes[open] .accion::after { content: "Recoger" }
+details.recientes > summary:hover .accion { border-color: var(--link) }
+.recientes-body { display: grid; gap: 44px; padding-block: 8px 28px }
 details > summary { cursor: pointer; font-size: .92rem; font-weight: 500; color: var(--link); padding-block: 4px; width: fit-content }
 details .grid { margin-top: 14px }
 
@@ -166,13 +178,14 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&am
 const fotos = D.fotos;
 const sitio = fotos.filter(f => f.forma === 'foto' || f.forma === 'tira').filter(f => f.grupo === 'sitio' && f.camp !== 'bianchi' && f.camp !== 'ministerio' && f.camp !== 'loja');
 const nFotos = sitio.filter(f => f.forma === 'foto').length, nTiras = sitio.filter(f => f.forma === 'tira').length;
-$('lead').textContent = "26 fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías del Ministerio de Cultura (2023) y propias de 2023 y 2025 para comparar. De Sessarego, Reichlen, von Hagen, Matos, Loja Alania y el Ministerio de Cultura, 30 fotografías, 6 tiras de negativos y tres planos aparecen en miniatura, con enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.";
+$('lead').textContent = "26 fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, en un panel que se abre, fotografías del Ministerio de Cultura (2023) y propias de 2023 y 2025 para comparar. De Sessarego, Reichlen, von Hagen, Matos, Loja Alania y el Ministerio de Cultura, 30 fotografías, 6 tiras de negativos y tres planos aparecen en miniatura, con enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.";
 
 /* índice */
-const items = D.camps.flatMap(c => {
+const RECIENTES = ['ministerio', 'bianchi'];
+const items = D.camps.filter(c => !RECIENTES.includes(c.key)).flatMap(c => {
   const it = [{ id: 'c-' + c.key, a: c.ano, b: c.corto, c: TINTE[c.key][0] }];
   return c.key === 'uhle' ? it.concat({ id: 'c-vacio', a: '1900–1945', b: 'Sin imágenes', c: '#55545f' }) : it;
-});
+}).concat({ id: 'c-recientes', a: '2023–2025', b: 'Recientes', c: TINTE.bianchi[0] });
 $('nav').innerHTML = items.map(i => `<li><a href="#${i.id}" style="--c:${i.c}"><b>${esc(i.a)}</b><span>${esc(i.b)}</span></a></li>`).join('');
 
 /* escala proporcional, 1870–2000 */
@@ -189,7 +202,7 @@ $('nav').innerHTML = items.map(i => `<li><a href="#${i.id}" style="--c:${i.c}"><
     const n = fotos.filter(f => f.camp === c.key && f.grupo === 'sitio' && f.forma !== 'ausente').length, a = anos[c.key], h = Math.max(8, n * 3.6), w = 16;
     const anchor = c.key === 'reichlen' || c.key === 'sessarego' || c.key === 'ministerio' || c.key === 'loja' ? 'end' : c.key === 'vonhagen' || c.key === 'wells' || c.key === 'bianchi' ? 'start' : 'middle';
     const dx = c.key === 'reichlen' || c.key === 'sessarego' || c.key === 'ministerio' || c.key === 'loja' ? w / 2 : c.key === 'vonhagen' || c.key === 'wells' ? w / 2 + 4 : c.key === 'bianchi' ? -w / 2 : 0;
-    s += `<a href="#c-${c.key}" aria-label="${esc(c.corto)}, ${n} imágenes"><rect x="${x(a) - 20}" y="0" width="40" height="${B}" fill="transparent"/>`;
+    s += `<a href="#${RECIENTES.includes(c.key) ? 'c-recientes' : 'c-' + c.key}" aria-label="${esc(c.corto)}, ${n} imágenes"><rect x="${x(a) - 20}" y="0" width="40" height="${B}" fill="transparent"/>`;
     s += `<rect x="${x(a) - w / 2}" y="${B - h}" width="${w}" height="${h}" fill="${n ? TINTE[c.key][0] : 'none'}" stroke="${TINTE[c.key][0]}"${n ? '' : ' stroke-dasharray="3 2"'}/>`;
     s += `<text class="t" x="${x(a) + dx}" y="${B - h - 7}" text-anchor="${anchor}">${esc(c.corto)} ${n || '¿?'}</text></a>`;
   }
@@ -212,6 +225,7 @@ for (const c of D.camps) {
   const fs = fotos.filter(f => f.camp === c.key);
   const ctx = fs.filter(f => f.grupo === 'contexto');
   const [cc, on] = TINTE[c.key];
+  if (c.key === RECIENTES[0]) h += `<details class="recientes" id="c-recientes"><summary><span class="yr">2023–2025</span><span class="tit">Fotografías recientes <span class="cuenta">${fotos.filter(f => RECIENTES.includes(f.camp)).length} imágenes, del Ministerio de Cultura y propias</span></span><span class="accion"></span></summary><div class="recientes-body">`;
   h += `<section class="camp" id="c-${c.key}" style="--c:${cc};--on:${on}"><div class="panel"><div class="yr">${esc(c.ano)}</div><h2>${esc(c.nome)}</h2><p class="sub">${esc(c.sub)}</p><p>${esc(c.txt)}</p></div><div class="body">`;
   for (const sec of c.secs) {
     const it = fs.filter(f => f.grupo === 'sitio' && (f.sec || null) === sec);
@@ -222,9 +236,11 @@ for (const c of D.camps) {
   lista.push(...ctx.filter(f => f.forma !== 'ausente' && !f.res));
   if (ctx.length) h += `<details><summary>Alrededores e imágenes en duda (${ctx.length})</summary><div class="grid">${ctx.map(card).join('')}</div></details>`;
   h += `</div></section>`;
+  if (c.key === RECIENTES[RECIENTES.length - 1]) h += `</div></details>`;
   if (c.key === 'uhle') h += VACIO;
 }
 $('main').innerHTML = h;
+document.addEventListener('click', e => { if (e.target.closest('a[href="#c-recientes"]')) $('c-recientes').open = true; });
 
 /* índice activo */
 const links = [...document.querySelectorAll('#nav a')];
