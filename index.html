@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Tarmatambo en imágenes</title>
+<title>Tarmatambo en imágenes: versión pública</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;1,400&display=swap">
@@ -126,7 +126,7 @@ button.b svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stro
 
 <header>
   <div class="open pad"><div class="inner">
-    <h1>Tarmatambo<br>en imágenes</h1>
+    <h1>Tarmatambo<br>en imágenes:<br>versión pública</h1>
     <div class="txt"><p class="lead" id="lead"></p>
     <p class="who">Reunido por Guilherme Bianchi, Departamento de História, Universidade de São Paulo. Correcciones y aportes son bienvenidos: gbianchi@usp.br</p></div>
   </div></div>
@@ -163,7 +163,7 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&am
 const fotos = D.fotos;
 const sitio = fotos.filter(f => f.forma === 'foto' || f.forma === 'tira').filter(f => f.grupo === 'sitio' && f.camp !== 'bianchi');
 const nFotos = sitio.filter(f => f.forma === 'foto').length, nTiras = sitio.filter(f => f.forma === 'tira').length;
-$('lead').textContent = `${nFotos} fotografías y ${nTiras} tiras de negativos del sitio, de 1899 a c. 1995, de seis autores. Antes, los grabados de Wiener. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías. Al final, fotografías propias de 2023 y 2025 para comparar.`;
+$('lead').textContent = "26 fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías propias de 2023 y 2025 para comparar. Otras 17 fotografías y 6 tiras de negativos, de Sessarego, Reichlen, von Hagen y Matos, aparecen solo con su ficha y el enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.";
 
 /* índice */
 const items = D.camps.flatMap(c => {

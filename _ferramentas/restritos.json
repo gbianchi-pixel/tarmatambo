@@ -1,4 +1,12 @@
 {
-  "acervos": ["reichlen", "sessarego", "vonhagen", "matos"],
-  "nota_rodape": "En esta versión pública, las imágenes del musée du quai Branly, del álbum de Sessarego (Ministerio de Cultura del Perú), de von Hagen y de Matos aparecen solo con su ficha y el enlace a la fuente, mientras no tengamos autorización para reproducirlas."
+  "acervos": [
+    "reichlen",
+    "sessarego",
+    "vonhagen",
+    "matos"
+  ],
+  "nota_rodape": "En esta versión pública, las imágenes del musée du quai Branly, del álbum de Sessarego (Ministerio de Cultura del Perú), de von Hagen y de Matos aparecen solo con su ficha y el enlace a la fuente, mientras no tengamos autorización para reproducirlas.",
+  "titulo": "Tarmatambo en imágenes: versión pública",
+  "h1": "Tarmatambo<br>en imágenes:<br>versión pública",
+  "subtitulo": "{n_visiveis} fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, fotografías propias de 2023 y 2025 para comparar. Otras {n_fotos_res} fotografías y {n_tiras_res} tiras de negativos, de Sessarego, Reichlen, von Hagen y Matos, aparecen solo con su ficha y el enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías."
 }

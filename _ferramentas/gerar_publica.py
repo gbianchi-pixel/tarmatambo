@@ -19,7 +19,7 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 
 
-def transformar(s, restritos, nota):
+def transformar(s, restritos, nota, titulo='', h1='', subtitulo=''):
     m = re.search(r'const D = (\{.*?\});\n', s, re.S)
     if not m:
         sys.exit('Não encontrei "const D = {...};" no HTML.')
@@ -46,6 +46,18 @@ def transformar(s, restritos, nota):
         "lista.push(...ctx.filter(f => f.forma !== 'ausente' && !f.res));")
     if nota:
         rep("</div></footer>", " " + nota + "</div></footer>")
+    if titulo:
+        rep("<title>Tarmatambo en imágenes</title>", f"<title>{titulo}</title>")
+    if h1:
+        rep("<h1>Tarmatambo<br>en imágenes</h1>", f"<h1>{h1}</h1>")
+    if subtitulo:
+        sitio = [f for f in D['fotos'] if f['forma'] in ('foto', 'tira') and f['grupo'] == 'sitio' and f['camp'] != 'bianchi']
+        texto = subtitulo.format(n_visiveis=sum(not f.get('res') for f in sitio),
+                                 n_fotos_res=sum(bool(f.get('res')) and f['forma'] == 'foto' for f in sitio),
+                                 n_tiras_res=sum(bool(f.get('res')) and f['forma'] == 'tira' for f in sitio))
+        s, n = re.subn(r"\$\('lead'\)\.textContent = `.*?`;", lambda _: f"$('lead').textContent = {json.dumps(texto, ensure_ascii=False)};", s, flags=re.S)
+        if n != 1:
+            sys.exit('Não encontrei a linha do subtítulo; a página mudou de estrutura.')
     usados = ['img/hero.jpg'] + [f'{d}/{f["id"]}.jpg' for f in D['fotos']
                                  if f['forma'] != 'ausente' and not f.get('res') for d in ('img', 'th')]
     return s, usados
@@ -60,7 +72,8 @@ def main():
     cfg = json.loads((AQUI / 'restritos.json').read_text())
     repo, midia = Path(a.repo), Path(a.midia)
 
-    s, usados = transformar(Path(a.html).read_text(), set(cfg['acervos']), cfg.get('nota_rodape', ''))
+    s, usados = transformar(Path(a.html).read_text(), set(cfg['acervos']), cfg.get('nota_rodape', ''),
+                           cfg.get('titulo', ''), cfg.get('h1', ''), cfg.get('subtitulo', ''))
 
     faltam, copiados = [], 0
     for p in usados:

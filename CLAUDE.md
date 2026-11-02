@@ -24,5 +24,6 @@ página completa por `_ferramentas/gerar_publica.py`.
 ## Acervos restritos
 
 `_ferramentas/restritos.json` lista os acervos que aparecem só com ficha e link
-para a fonte (sem imagem), e a nota que vai no rodapé. Quando chegar uma
-autorização, retirar o acervo da lista, ajustar a nota e regenerar.
+para a fonte (sem imagem), a nota que vai no rodapé, e o título e o subtítulo da
+versão pública. Quando chegar uma autorização, retirar o acervo da lista, ajustar
+nota, título e subtítulo, e regenerar.
