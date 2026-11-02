@@ -82,6 +82,15 @@ button.card:focus-visible, button.strip:focus-visible { outline: 2px solid var(-
 .flag { color: var(--flag) }
 .strips { display: grid; gap: 16px }
 .strip img { width: 100%; height: auto; aspect-ratio: 1500 / 170; object-fit: cover; display: block; background: var(--frame) }
+/* menú de Recientes en el índice */
+.nav { --menu-x: 0px }
+.nav a[aria-haspopup] b::after { content: " ▾"; font-weight: 400 }
+.nav a[aria-expanded="true"] { opacity: 1 }
+.nav-menu { position: absolute; top: 100%; left: var(--menu-x); width: min(310px, calc(100vw - 32px)); background: var(--ink); color: #fff; display: grid; box-shadow: 0 10px 24px rgb(14 12 22 / .35) }
+.nav-menu[hidden] { display: none }
+.nav-menu a { display: grid; gap: 1px; padding: 10px 14px 10px 12px; color: #fff; text-decoration: none; font-size: .85rem; line-height: 1.3; border-left: 5px solid var(--c) }
+.nav-menu a span { font-size: .76rem; opacity: .75 }
+.nav-menu a:hover, .nav-menu a:focus-visible { background: #2c2b3c }
 /* fotografías recientes, en un panel que se abre y se recoge */
 .recientes { scroll-margin-top: 66px; border-block: 1px solid var(--line) }
 details.recientes > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; width: auto; padding-block: 18px; color: var(--fg); list-style: none }
@@ -178,15 +187,16 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&am
 const fotos = D.fotos;
 const sitio = fotos.filter(f => f.forma === 'foto' || f.forma === 'tira').filter(f => f.grupo === 'sitio' && f.camp !== 'bianchi' && f.camp !== 'ministerio' && f.camp !== 'loja');
 const nFotos = sitio.filter(f => f.forma === 'foto').length, nTiras = sitio.filter(f => f.forma === 'tira').length;
-$('lead').textContent = "26 fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, en un panel que se abre, fotografías del Ministerio de Cultura (2023) y propias de 2023 y 2025 para comparar. De Sessarego, Reichlen, von Hagen, Matos, Loja Alania y el Ministerio de Cultura, 30 fotografías, 6 tiras de negativos y tres planos aparecen en miniatura, con enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.";
+$('lead').textContent = "26 fotografías históricas del sitio, de Max Uhle (1899) y Jeffrey R. Parsons (1975). Antes, los grabados de Wiener. Al final, en un panel que se abre, dos fotografías sin fecha publicadas en 2017, las del Ministerio de Cultura (2023) y las propias de 2023 y 2025 para comparar. De Sessarego, Reichlen, von Hagen, Matos, Loja Alania y el Ministerio de Cultura, 30 fotografías, 6 tiras de negativos y tres planos aparecen en miniatura, con enlace a la fuente. Entre 1900 y 1946 no hemos encontrado ninguna imagen, aunque sabemos que hacia 1935 y 1936 se tomaron fotografías.";
 
 /* índice */
-const RECIENTES = ['ministerio', 'bianchi'];
+const RECIENTES = ['loja', 'ministerio', 'bianchi'];
 const items = D.camps.filter(c => !RECIENTES.includes(c.key)).flatMap(c => {
   const it = [{ id: 'c-' + c.key, a: c.ano, b: c.corto, c: TINTE[c.key][0] }];
   return c.key === 'uhle' ? it.concat({ id: 'c-vacio', a: '1900–1945', b: 'Sin imágenes', c: '#55545f' }) : it;
-}).concat({ id: 'c-recientes', a: '2023–2025', b: 'Recientes', c: TINTE.bianchi[0] });
-$('nav').innerHTML = items.map(i => `<li><a href="#${i.id}" style="--c:${i.c}"><b>${esc(i.a)}</b><span>${esc(i.b)}</span></a></li>`).join('');
+}).concat({ id: 'c-recientes', a: '2017–2025', b: 'Recientes', c: TINTE.bianchi[0], menu: true });
+const AMBITO_RECIENTES = '2017–2025';
+$('nav').innerHTML = items.map(i => `<li><a href="#${i.id}" style="--c:${i.c}"${i.menu ? ' aria-haspopup="true" aria-expanded="false" aria-controls="navMenu"' : ''}><b>${esc(i.a)}</b><span>${esc(i.b)}</span></a></li>`).join('');
 
 /* escala proporcional, 1870–2000 */
 (function () {
@@ -202,7 +212,7 @@ $('nav').innerHTML = items.map(i => `<li><a href="#${i.id}" style="--c:${i.c}"><
     const n = fotos.filter(f => f.camp === c.key && f.grupo === 'sitio' && f.forma !== 'ausente').length, a = anos[c.key], h = Math.max(8, n * 3.6), w = 16;
     const anchor = c.key === 'reichlen' || c.key === 'sessarego' || c.key === 'ministerio' || c.key === 'loja' ? 'end' : c.key === 'vonhagen' || c.key === 'wells' || c.key === 'bianchi' ? 'start' : 'middle';
     const dx = c.key === 'reichlen' || c.key === 'sessarego' || c.key === 'ministerio' || c.key === 'loja' ? w / 2 : c.key === 'vonhagen' || c.key === 'wells' ? w / 2 + 4 : c.key === 'bianchi' ? -w / 2 : 0;
-    s += `<a href="#${RECIENTES.includes(c.key) ? 'c-recientes' : 'c-' + c.key}" aria-label="${esc(c.corto)}, ${n} imágenes"><rect x="${x(a) - 20}" y="0" width="40" height="${B}" fill="transparent"/>`;
+    s += `<a href="#c-${c.key}" aria-label="${esc(c.corto)}, ${n} imágenes"><rect x="${x(a) - 20}" y="0" width="40" height="${B}" fill="transparent"/>`;
     s += `<rect x="${x(a) - w / 2}" y="${B - h}" width="${w}" height="${h}" fill="${n ? TINTE[c.key][0] : 'none'}" stroke="${TINTE[c.key][0]}"${n ? '' : ' stroke-dasharray="3 2"'}/>`;
     s += `<text class="t" x="${x(a) + dx}" y="${B - h - 7}" text-anchor="${anchor}">${esc(c.corto)} ${n || '¿?'}</text></a>`;
   }
@@ -225,7 +235,7 @@ for (const c of D.camps) {
   const fs = fotos.filter(f => f.camp === c.key);
   const ctx = fs.filter(f => f.grupo === 'contexto');
   const [cc, on] = TINTE[c.key];
-  if (c.key === RECIENTES[0]) h += `<details class="recientes" id="c-recientes"><summary><span class="yr">2023–2025</span><span class="tit">Fotografías recientes <span class="cuenta">${fotos.filter(f => RECIENTES.includes(f.camp)).length} imágenes, del Ministerio de Cultura y propias</span></span><span class="accion"></span></summary><div class="recientes-body">`;
+  if (c.key === RECIENTES[0]) h += `<details class="recientes" id="c-recientes"><summary><span class="yr">${AMBITO_RECIENTES}</span><span class="tit">Fotografías recientes <span class="cuenta">${fotos.filter(f => RECIENTES.includes(f.camp)).length} imágenes de tres procedencias: un libro de 2017, el Ministerio de Cultura y propias</span></span><span class="accion"></span></summary><div class="recientes-body">`;
   h += `<section class="camp" id="c-${c.key}" style="--c:${cc};--on:${on}"><div class="panel"><div class="yr">${esc(c.ano)}</div><h2>${esc(c.nome)}</h2><p class="sub">${esc(c.sub)}</p><p>${esc(c.txt)}</p></div><div class="body">`;
   for (const sec of c.secs) {
     const it = fs.filter(f => f.grupo === 'sitio' && (f.sec || null) === sec);
@@ -240,7 +250,30 @@ for (const c of D.camps) {
   if (c.key === 'uhle') h += VACIO;
 }
 $('main').innerHTML = h;
-document.addEventListener('click', e => { if (e.target.closest('a[href="#c-recientes"]')) $('c-recientes').open = true; });
+/* menú de Recientes: se abre desde el índice y lleva a cada procedencia */
+const navEl = document.querySelector('.nav'), recBtn = document.querySelector('#nav a[aria-haspopup]');
+const navMenu = document.createElement('div');
+navMenu.id = 'navMenu'; navMenu.className = 'nav-menu'; navMenu.hidden = true;
+navMenu.innerHTML = D.camps.filter(c => RECIENTES.includes(c.key)).map(c => `<a href="#c-${c.key}" style="--c:${TINTE[c.key][0]}">${esc(c.nome)}<span>${esc(c.ano)} · ${fotos.filter(f => f.camp === c.key).length} imágenes</span></a>`).join('');
+navEl.appendChild(navMenu);
+const menuRec = abrir => {
+  navMenu.hidden = !abrir;
+  recBtn.setAttribute('aria-expanded', String(abrir));
+  if (abrir) {
+    const n = navEl.getBoundingClientRect(), x = recBtn.getBoundingClientRect().left - n.left;
+    navEl.style.setProperty('--menu-x', Math.max(16, Math.min(x, n.width - navMenu.offsetWidth - 16)) + 'px');
+  }
+};
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#c-"]');
+  if (a === recBtn) { e.preventDefault(); menuRec(navMenu.hidden); return; }
+  if (a && $(a.getAttribute('href').slice(1))?.closest('details.recientes')) $('c-recientes').open = true;
+  if (!navMenu.hidden && !e.target.closest('#navMenu')) menuRec(false);
+  else if (a && a.closest('#navMenu')) menuRec(false);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !navMenu.hidden) { menuRec(false); recBtn.focus(); } });
+$('nav').addEventListener('scroll', () => menuRec(false), { passive: true });
+addEventListener('resize', () => menuRec(false));
 
 /* índice activo */
 const links = [...document.querySelectorAll('#nav a')];
