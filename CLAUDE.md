@@ -36,4 +36,4 @@ Os acervos em `miniaturas_acervos` (hoje, Reichlen) e os itens em
 arquivos são `th/mini_<id>.jpg`, ficam só neste repositório e não vêm do artefato.
 
 `_ferramentas/extras.json` acrescenta registros que só existem na versão publicada aqui
-(hoje, as 7 imagens de Matos 2002), sem passar pela página completa.
+(hoje, as 7 imagens de Matos 2002 e a fotografia 1 de Matos, Arellano e Brown 1998), sem passar pela página completa.

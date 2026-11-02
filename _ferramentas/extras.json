@@ -1,11 +1,12 @@
 {
  "camps": {
   "matos": {
-   "ano": "c. 1995 y 2002",
-   "sub": "En Revista de Arqueología Americana 8 y en El hombre y los Andes",
-   "txt": "Una vista del pueblo publicada en 1995 y, del estudio del awana wasi de 1995–96, cuatro fotografías y tres planos publicados en 2002. Las conocemos solo por su reproducción impresa.",
+   "ano": "c. 1995–2002",
+   "sub": "En Revista de Arqueología Americana 8, en el I Encuentro Internacional de Peruanistas y en El hombre y los Andes",
+   "txt": "Una vista del pueblo publicada en 1995, otra publicada en 1998 y, del estudio del awana wasi de 1995–96, cuatro fotografías y tres planos publicados en 2002. Las conocemos solo por su reproducción impresa.",
    "secs": [
     "El pueblo (publ. 1995)",
+    "El pueblo (publ. 1998)",
     "El awana wasi (publ. 2002)"
    ]
   }
@@ -14,6 +15,27 @@
   "matos_foto4": "El pueblo (publ. 1995)"
  },
  "fotos": [
+  {
+   "id": "matos1998_foto1",
+   "camp": "matos",
+   "titulo": "Sede administrativa de Tarmatampu",
+   "data": "sin fecha; publ. 1998",
+   "desc": "Vista desde lo alto de muros, campos y casas del pueblo. Es otra toma, distinta de la publicada en 1995.",
+   "cit": "Ramiro Matos, Carmen Arellano y David Brown, “Asentamientos inka en Chakamarka y Tarmatambo (departamento de Junín): Problemas y criterios de interpretación para la reconstrucción de una provincia inka,” en I Encuentro Internacional de Peruanistas (Lima: Universidad de Lima, 1998), 1:181–93, fotografía 1, p. 191.",
+   "lic": "Universidad de Lima; derechos por verificar; uso de investigación",
+   "link": "https://hdl.handle.net/20.500.12724/16544",
+   "grupo": "sitio",
+   "flags": [],
+   "forma": "foto",
+   "orig": "Matos, Arellano y Brown 1998, fotografía 1, p. 191",
+   "sec": "El pueblo (publ. 1998)",
+   "w": 0,
+   "h": 0,
+   "res": true,
+   "mini": true,
+   "fonte": "Ver en el volumen, p. 191 (Universidad de Lima)",
+   "credito": "Miniatura, Universidad de Lima"
+  },
   {
    "id": "matos2002_fig4_foto1",
    "camp": "matos",
